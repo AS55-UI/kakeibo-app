@@ -84,7 +84,7 @@
  npm run dev を実行
  
 - 2.ローカルサーバーを起動します
-php artisan Serve を実行
+php artisan serve を実行
  
 その後、
 http://127.0.0.1:8000 にアクセスするとアプリが起動します。
