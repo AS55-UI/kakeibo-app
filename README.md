@@ -64,10 +64,10 @@
 ---
 
 ## 使用技術
-- Laravel
+- Laravel（PHPフレームワーク）
 - PHP
 - MySQL
-- Blade
+- Blade（テンプレートエンジン）
 
 ---
 
