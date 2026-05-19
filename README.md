@@ -70,13 +70,14 @@
 ---
 
 ## 動作環境
-- OS:Windows11
-- PHP:8.2.12
-- Laravel:12.56.0
-- Node.js:24.15.0
-- npm:11.12.1
-- Database:MySQL(開発環境ではMariaDB 10.4.32を使用) 
-- Web Server:Apache 2.4.58(XAMPP)
+- OS:　Windows　11
+- PHP:　8.2.12
+- Laravel:　12.56.0
+- Node.js:　24.15.0
+- npm:　11.12.1
+- Database:　MySQL(開発環境ではMariaDB 10.4.32を使用) 
+- Web Server:　Apache 2.4.58(XAMPP)
+- Frontend Build Tool:Vite 7.3.3
 
 ---
 
