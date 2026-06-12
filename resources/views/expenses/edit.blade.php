@@ -41,7 +41,13 @@
 			<input type="number" name="amount" value="{{ old('amount', $expense->amount) }}">	
 		
 		</div>
+
+		<div>
+			<label>カテゴリ</label>
+			<input type="text" name="category" value="{{ old('category', $expense->category) }}" piaceholder="カテゴリ">	
 		
+		</div>
+
 		<button type = "submit">更新</button>
 		
 	</form>
