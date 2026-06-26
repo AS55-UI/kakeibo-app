@@ -4,14 +4,30 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExpenseController;
 
-Route::resource('expenses', ExpenseController::class)
-	->middleware('auth');
+Route::get('/', function() {
+	if (auth()->check()) {
+		return redirect('/expenses');
+	}
+	return redirect('/login');
+});
+
+Route::middleware('auth')->group(function() {
+	Route::get('/expenses/export', [ExpenseController::class, 'export'])
+		->name('expenses.export');
+
+	
+	Route::resource('expenses', ExpenseController::class);
+
+	Route::post('/budgets', [ExpenseController::class, 'storeBudget']);
+
+
+	Route::get('/dashboard', function () {
+		return redirect('/expenses');
+	})->name('dashboard');
+});
 
 require __DIR__.'/auth.php';
 
-Route::get('/', function() {
-	return redirect('/expenses');
-});
 
 //Route::get('/lang-check',function() {
 //	return app()->getLocale();
