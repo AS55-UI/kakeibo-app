@@ -49,6 +49,8 @@
 		</div>
 
 		<button type = "submit">更新</button>
+
+		<button type = "button" onclick="location.href='{{ route('expenses.index') }}'">戻る（キャンセル）</button>
 		
 	</form>
 

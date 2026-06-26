@@ -3,6 +3,19 @@
 <head>
 	<meta charset = "UTF-8">
 	<title>家計簿ミニアプリ</title>
+	<style>
+		ul.pagination {
+			list-style: none;  /*・を消す*/
+			padingi:0;
+			display:flex;      /*・横並び*/
+			gap: 5px           /*・間隔*/
+		}
+		
+		ul.pagination li {
+			display: inline;
+		}
+	</style>
+	
 	@if ($errors->any())
 		<div style="color:red;">
 			<ul>
@@ -16,6 +29,10 @@
 
 <body>
 	<h1>家計簿ミニアプリ</h1>
+	@auth
+		<p>ようこそ、{{ Auth::user()->name }}さん！</p>
+	@endauth
+	
 	<!-- ログアウト -->
 	<form action="{{ route('logout') }}" method="POST">
 		@csrf
@@ -31,6 +48,14 @@
 		<input type="text" name="category" value="{{ old('category') }}" placeholder="カテゴリ" required>	
 		<button type = "submit">追加</button>
 	</form>
+	<!-- 予算登録フォーム -->
+	<h2>予算登録</h2>
+	<form action="/budgets" method="POST" novalidate>
+		@csrf
+		<input type="month" name="month" value="{{ old('month') }}" required>	
+		<input type="number" name="budget_amount" value="{{ old('budget_amount') }}" placeholder="予算金額" required>	
+		<button type = "submit">登録</button>
+	</form>
 
 	<h2>一覧</h2>
 	@if($expenses->isEmpty())
@@ -45,6 +70,11 @@
 
 		<!-- 日付検索 -->
 		<input type="date" name="date" value="{{ request('date') }}">	
+
+		<!-- 期間指定検索 -->
+		<input type="date" name="from_date" value="{{ request('from_date') }}">
+		～
+		<input type="date" name="to_date" value="{{ request('to_date') }}">
 
 		<!-- カテゴリ検索 -->
 		<input type="text" name="category" value="{{ request('category') }}" placeholder="カテゴリ">	
@@ -62,7 +92,12 @@
 		<a href="/expenses" style="margin-left:10px; padding:5px; background:#eee;">リセット</a>
 	</form>
 	
-
+	<!--CSV出力ボタン-->
+	<div style="margin: 10px 0;">
+		<a href="{{ route('expenses.export') }}?{{ http_build_query(request()->query()) }}">CSVダウンロード</a>
+	</div>
+	
+	
 	<table border="1" cellpadding="5">
 		<tr>
 			<th>日付</th>
@@ -95,23 +130,60 @@
 	</table>
 	
 	<h2>合計:{{ $total }} 円</h2>
-
+	
+	<!--ページネーション-->	
+	<div style="margin-top:20px;">
+		{{$expenses->links('vendor.pagination.tailwind') }}
+	</div>
+	
 	<h2>月ごとの合計</h2>
 
 	<table border="1">
 		<tr>
 			<th>月</th>
 			<th>合計金額</th>
-		</th>
+			<th>予算</th>
+			<th>残り</th>
+		</tr>
+		
 		@foreach ($monthlyTotals as $month)
 		<tr>
 			<td>{{$month->month }}</td>
 			<td>{{$month->total }} 円</td>
+			<!-- 予算 -->
+			<td>
+				{{ $budgets[$month->month]->amount ?? '未設定' }}
+			</td>
+
+			<!-- 残り -->
+			<td
+				@if(isset($budgets[$month->month]) &&
+					($budgets[$month->month]->amount - $month->total) < 0)
+					style="color:red"
+				@endif
+			>
+				@if(isset($budgets[$month->month]))
+					{{ $budgets[$month->month]->amount - $month->total }} 円
+				@else
+					-
+				@endif
+			</td>
 		</tr>
 		@endforeach
 	</table>
 	
-	
-	
+	<h2>カテゴリ別合計</h2>
+	<table border="1">
+		<tr>
+			<th>カテゴリ</th>
+			<th>合計金額</th>
+		</tr>
+		@foreach ($categoryTotals as $category)
+		<tr>
+			<td>{{ $category->category  }}</td>
+			<td>{{ number_format($category->total) }} 円</td>
+		</tr>
+		@endforeach
+	</table>
 </body>
 </html>
