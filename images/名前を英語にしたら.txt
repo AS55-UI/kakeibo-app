@@ -1,0 +1,31 @@
+ログイン画面
+一覧画面
+一覧画面_削除ボタン押下
+一覧画面_削除ボタン押下_ポップアップで削除しますか？でOKボタン押下後
+一覧画面_支出編集画面(日時・内容・金額を変更)_更新ボタン押下後
+一覧画面_追加入力後
+一覧画面_追加入力時
+一覧画面_編集ボタン押下後
+支出編集画面(日付・内容・金額を変更)_更新ボタン押下
+新規登録画面
+
+
+Login Screen ? ログイン画面
+
+List Screen ? 一覧画面
+
+List Delete Button Click ? 一覧画面_削除ボタン押下
+
+List Delete Confirmation OK ? 一覧画面削除ボタン押下ポップアップでOKボタン押下後
+
+List Edit Expense Updated ? 一覧画面支出編集画面(日時・内容・金額を変更)更新ボタン押下後
+
+List After Additional Entry ? 一覧画面_追加入力後
+
+List During Additional Entry ? 一覧画面_追加入力時
+
+List Edit Button Click ? 一覧画面_編集ボタン押下後
+
+Expense Edit Update ? 支出編集画面(日付・内容・金額を変更)_更新ボタン押下
+
+New Registration Screen ? 新規登録画面
